@@ -162,7 +162,7 @@ private struct AboutView: View {
         ZStack {
             Theme.paper.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 20) {
+            VStack {
                 HStack {
                     Spacer()
                     Button {
@@ -173,43 +173,45 @@ private struct AboutView: View {
                             .foregroundStyle(Theme.forest)
                     }
                 }
+                .padding([.horizontal, .top], 24)
 
-                Spacer()
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 20) {
+                        HStack(spacing: 10) {
+                            BrandMark()
+                                .frame(width: 30, height: 30)
+                                .accessibilityHidden(true)
+                            Text("Pocket Anchor")
+                                .font(.scalable(20, weight: .medium, design: .serif))
+                                .foregroundStyle(Theme.charcoal)
+                        }
+                        .accessibilityElement(children: .combine)
+                        .padding(.top, 20)
 
-                HStack(spacing: 10) {
-                    BrandMark()
-                        .frame(width: 30, height: 30)
-                        .accessibilityHidden(true)
-                    Text("Pocket Anchor")
-                        .font(.scalable(20, weight: .medium, design: .serif))
-                        .foregroundStyle(Theme.charcoal)
+                        Text("Every doorway leads somewhere.")
+                            .font(.scalable(13))
+                            .italic()
+                            .foregroundStyle(Theme.softInk)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of EchoSink and Downstep.")
+                            .font(.scalable(14))
+                            .foregroundStyle(Theme.softInk)
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Text("No accounts. No ads. No streaks. Your data never leaves this device.")
+                            .font(.scalable(12))
+                            .foregroundStyle(Theme.softInk.opacity(0.8))
+                            .fixedSize(horizontal: false, vertical: true)
+
+                        Text("The Nature, Texture, Life, and Sound prompts aren't a game or a checklist — they're just there to help you notice more. Nothing is scored, tracked, or checked afterward.")
+                            .font(.scalable(12))
+                            .foregroundStyle(Theme.softInk.opacity(0.8))
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .padding(24)
                 }
-                .accessibilityElement(children: .combine)
-
-                Text("Every doorway leads somewhere.")
-                    .font(.scalable(13))
-                    .italic()
-                    .foregroundStyle(Theme.softInk)
-
-                Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of EchoSink and Downstep.")
-                    .font(.scalable(14))
-                    .foregroundStyle(Theme.softInk)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                Text("No accounts. No ads. No streaks. Your data never leaves this device.")
-                    .font(.scalable(12))
-                    .foregroundStyle(Theme.softInk.opacity(0.8))
-                    .fixedSize(horizontal: false, vertical: true)
-
-                Text("The Nature, Texture, Life, and Sound prompts aren't a game or a checklist — they're just there to help you notice more. Nothing is scored, tracked, or checked afterward.")
-                    .font(.scalable(12))
-                    .foregroundStyle(Theme.softInk.opacity(0.8))
-                    .fixedSize(horizontal: false, vertical: true)
-
-                Spacer()
-                Spacer()
             }
-            .padding(24)
         }
     }
 }

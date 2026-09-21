@@ -24,7 +24,7 @@ extension Font {
             baseFont = UIFont(descriptor: serifDescriptor, size: size)
         }
 
-        let scaled = UIFontMetrics.default.scaledFont(for: baseFont)
+        let scaled = UIFontMetrics.default.scaledFont(for: baseFont, compatibleWith: .current)
         return Font(scaled)
     }
 }
