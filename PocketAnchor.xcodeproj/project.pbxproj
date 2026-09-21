@@ -20,6 +20,7 @@
 		6F39F4D39E1638A0512154E3 /* ReturnSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD0AF56B15162000E98960 /* ReturnSummaryView.swift */; };
 		BEC0B809AF018C750ED6B5C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4856A1712B4B421426E9828 /* Assets.xcassets */; };
 		B22F7A96D66C4CFACD81244E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3AC88D2CF76A376790AE10D2 /* PrivacyInfo.xcprivacy */; };
+		CD47EEC9DEEB782F1584C4D5 /* ScalableFont.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4B5430E76D320ED1F0752E /* ScalableFont.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		A5BD0AF56B15162000E98960 /* ReturnSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnSummaryView.swift; sourceTree = "<group>"; };
 		D4856A1712B4B421426E9828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3AC88D2CF76A376790AE10D2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		FA4B5430E76D320ED1F0752E /* ScalableFont.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalableFont.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				C8FA3450096BDE584E2BE34E /* RootFlowView.swift */,
 				0677BE33965A03A48C92805D /* PendingSession.swift */,
 				9E8BB503BEBCCD9593F0A2E3 /* Theme.swift */,
+				FA4B5430E76D320ED1F0752E /* ScalableFont.swift */,
 				FA4E5BCEB576E52FECB6AFD7 /* AudioCue.swift */,
 				3AC88D2CF76A376790AE10D2 /* PrivacyInfo.xcprivacy */,
 				90DD0467C6A738950F609AE6 /* Models */,
@@ -183,6 +186,7 @@
 				0299FE737CCCC881B6A8A294 /* IntentionView.swift in Sources */,
 				2453F8EFF7F0729845A7936C /* PocketStateView.swift in Sources */,
 				6F39F4D39E1638A0512154E3 /* ReturnSummaryView.swift in Sources */,
+				CD47EEC9DEEB782F1584C4D5 /* ScalableFont.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

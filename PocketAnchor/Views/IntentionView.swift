@@ -6,13 +6,32 @@ struct IntentionView: View {
     @State private var selected: OutingDuration = .block
     @State private var selectedCategory: NoticeCategory
     @State private var chosenNotice: String
+    @State private var noticeQueue: [String]
     @State private var showingAbout = false
 
     init(onActivate: @escaping (OutingDuration) -> Void) {
         self.onActivate = onActivate
         let category = NoticeCategory.allCases.randomElement() ?? .nature
+        var queue = category.items.shuffled()
+        let first = queue.removeFirst()
         _selectedCategory = State(initialValue: category)
-        _chosenNotice = State(initialValue: category.randomItem())
+        _chosenNotice = State(initialValue: first)
+        _noticeQueue = State(initialValue: queue)
+    }
+
+    /// Reveals the next notice for a category: cycles through all of that
+    /// category's items in shuffled order before any repeat, rather than
+    /// picking independently at random each time (which could repeat an
+    /// item or skip others entirely across several taps).
+    private func revealNotice(for category: NoticeCategory) {
+        if selectedCategory != category {
+            selectedCategory = category
+            noticeQueue = category.items.shuffled()
+        }
+        if noticeQueue.isEmpty {
+            noticeQueue = category.items.shuffled()
+        }
+        chosenNotice = noticeQueue.removeFirst()
     }
 
     var body: some View {
@@ -33,21 +52,32 @@ struct IntentionView: View {
                 .padding(.top, 8)
                 .accessibilityElement(children: .combine)
 
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("You don't have to go far.")
-                        .font(.system(size: 26, weight: .medium, design: .serif))
-                        .foregroundStyle(Theme.charcoal)
+                Text("You don't have to go far.")
+                    .font(.system(size: 26, weight: .medium, design: .serif))
+                    .foregroundStyle(Theme.charcoal)
 
-                    Text("Maybe something to notice today")
-                        .font(.system(size: 12, weight: .medium))
+                VStack(alignment: .leading, spacing: 10) {
+                    ForEach(OutingDuration.allCases) { duration in
+                        DurationRow(duration: duration, isSelected: duration == selected) {
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                selected = duration
+                            }
+                        }
+                    }
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Choose something to notice. Then look for it. Selective attention does the rest.")
+                        .font(.system(size: 13))
                         .foregroundStyle(Theme.softInk)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
 
                     HStack(spacing: 8) {
                         ForEach(NoticeCategory.allCases) { category in
                             Button {
                                 withAnimation(.easeInOut(duration: 0.2)) {
-                                    selectedCategory = category
-                                    chosenNotice = category.randomItem()
+                                    revealNotice(for: category)
                                 }
                             } label: {
                                 Text(category.label)
@@ -70,16 +100,6 @@ struct IntentionView: View {
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(.top, 2)
-                }
-
-                VStack(alignment: .leading, spacing: 10) {
-                    ForEach(OutingDuration.allCases) { duration in
-                        DurationRow(duration: duration, isSelected: duration == selected) {
-                            withAnimation(.easeInOut(duration: 0.2)) {
-                                selected = duration
-                            }
-                        }
-                    }
                 }
 
                 VStack(alignment: .leading, spacing: 5) {
@@ -181,6 +201,11 @@ private struct AboutView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 Text("No accounts. No ads. No streaks. Your data never leaves this device.")
+                    .font(.system(size: 12))
+                    .foregroundStyle(Theme.softInk.opacity(0.8))
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Text("The Nature, Texture, Life, and Sound prompts aren't a game or a checklist — they're just there to help you notice more. Nothing is scored, tracked, or checked afterward.")
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.softInk.opacity(0.8))
                     .fixedSize(horizontal: false, vertical: true)
