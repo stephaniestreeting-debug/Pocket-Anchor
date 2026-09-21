@@ -24,8 +24,11 @@ struct RootFlowView: View {
                 IntentionView { duration in
                     let startedAt = Date.now
                     PendingSessionStore.save(PendingSession(startedAt: startedAt, duration: duration))
-                    stage = .pocket(duration: duration, startedAt: startedAt)
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        stage = .pocket(duration: duration, startedAt: startedAt)
+                    }
                 }
+                .transition(.opacity)
             case .pocket(let duration, let startedAt):
                 PocketStateView(duration: duration, startedAt: startedAt) { finishedAt in
                     PendingSessionStore.clear()
@@ -34,12 +37,18 @@ struct RootFlowView: View {
                         actualDuration: finishedAt.timeIntervalSince(startedAt),
                         duration: duration
                     )
-                    stage = .summary(record: record)
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        stage = .summary(record: record)
+                    }
                 }
+                .transition(.opacity)
             case .summary(let record):
                 ReturnSummaryView(record: record) {
-                    stage = .intention
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        stage = .intention
+                    }
                 }
+                .transition(.opacity)
             }
         }
     }

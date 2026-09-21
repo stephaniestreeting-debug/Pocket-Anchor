@@ -101,13 +101,28 @@ struct ReturnSummaryView: View {
                                     .frame(width: 26, height: 26)
                                     .contentShape(Circle())
                                     .onTapGesture {
-                                        noticedCount = (index < noticedCount) ? index : index + 1
+                                        withAnimation(.easeInOut(duration: 0.2)) {
+                                            noticedCount = (index < noticedCount) ? index : index + 1
+                                        }
                                         save()
                                     }
-                                    .accessibilityLabel("Notice")
                             }
                         }
                         .padding(.top, 4)
+                        .accessibilityElement(children: .ignore)
+                        .accessibilityLabel("Things noticed")
+                        .accessibilityValue("\(noticedCount) of \(maxDots)")
+                        .accessibilityAdjustableAction { direction in
+                            switch direction {
+                            case .increment:
+                                noticedCount = min(maxDots, noticedCount + 1)
+                            case .decrement:
+                                noticedCount = max(0, noticedCount - 1)
+                            @unknown default:
+                                break
+                            }
+                            save()
+                        }
                     }
 
                     VStack(alignment: .leading, spacing: 10) {
@@ -118,7 +133,9 @@ struct ReturnSummaryView: View {
                         HStack(spacing: 8) {
                             ForEach(moodOptions, id: \.self) { option in
                                 Button {
-                                    selectedMood = (selectedMood == option) ? nil : option
+                                    withAnimation(.easeInOut(duration: 0.2)) {
+                                        selectedMood = (selectedMood == option) ? nil : option
+                                    }
                                     save()
                                 } label: {
                                     Text(option)
@@ -130,6 +147,7 @@ struct ReturnSummaryView: View {
                                         .clipShape(RoundedRectangle(cornerRadius: 12))
                                 }
                                 .buttonStyle(.plain)
+                                .accessibilityAddTraits(selectedMood == option ? [.isButton, .isSelected] : .isButton)
                             }
                         }
                     }

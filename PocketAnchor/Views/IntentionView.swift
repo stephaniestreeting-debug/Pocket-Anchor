@@ -16,12 +16,14 @@ struct IntentionView: View {
                 HStack(spacing: 10) {
                     BrandMark()
                         .frame(width: 26, height: 26)
+                        .accessibilityHidden(true)
                     Text("POCKET ANCHOR")
                         .font(.system(size: 13, weight: .medium))
                         .tracking(2)
                         .foregroundStyle(Theme.charcoal)
                 }
                 .padding(.top, 8)
+                .accessibilityElement(children: .combine)
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("You don't have to go far.")
@@ -38,7 +40,9 @@ struct IntentionView: View {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(OutingDuration.allCases) { duration in
                         DurationRow(duration: duration, isSelected: duration == selected) {
-                            selected = duration
+                            withAnimation(.easeInOut(duration: 0.2)) {
+                                selected = duration
+                            }
                         }
                     }
                 }
@@ -124,10 +128,12 @@ private struct AboutView: View {
                 HStack(spacing: 10) {
                     BrandMark()
                         .frame(width: 30, height: 30)
+                        .accessibilityHidden(true)
                     Text("Pocket Anchor")
                         .font(.system(size: 20, weight: .medium, design: .serif))
                         .foregroundStyle(Theme.charcoal)
                 }
+                .accessibilityElement(children: .combine)
 
                 Text("Every doorway leads somewhere.")
                     .font(.system(size: 13))
@@ -189,6 +195,9 @@ private struct DurationRow: View {
         }
         .foregroundStyle(Theme.charcoal)
         .buttonStyle(.plain)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(duration.label), \(duration.subtitle)\(duration.reassurance.map { ". \($0)" } ?? "")")
+        .accessibilityAddTraits(isSelected ? [.isButton, .isSelected] : .isButton)
     }
 }
 
