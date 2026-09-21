@@ -75,11 +75,11 @@ struct ReturnSummaryView: View {
                 VStack(alignment: .leading, spacing: 28) {
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Welcome back.")
-                            .font(.system(size: 26, weight: .medium, design: .serif))
+                            .font(.scalable(26, weight: .medium, design: .serif))
                             .foregroundStyle(Theme.charcoal)
 
                         Text(welcomeLine)
-                            .font(.system(size: 15))
+                            .font(.scalable(15))
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
                     }
@@ -87,10 +87,10 @@ struct ReturnSummaryView: View {
 
                     VStack(alignment: .leading, spacing: 10) {
                         Text("Did anything catch your eye?")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(.scalable(14, weight: .medium))
                             .foregroundStyle(Theme.charcoal)
                         Text("Tap for each thing you remember, however small.")
-                            .font(.system(size: 12))
+                            .font(.scalable(12))
                             .foregroundStyle(Theme.softInk)
 
                         HStack(spacing: 14) {
@@ -127,7 +127,7 @@ struct ReturnSummaryView: View {
 
                     VStack(alignment: .leading, spacing: 10) {
                         Text("How do you feel right now?")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(.scalable(14, weight: .medium))
                             .foregroundStyle(Theme.charcoal)
 
                         HStack(spacing: 8) {
@@ -139,7 +139,7 @@ struct ReturnSummaryView: View {
                                     save()
                                 } label: {
                                     Text(option)
-                                        .font(.system(size: 12))
+                                        .font(.scalable(12))
                                         .foregroundStyle(selectedMood == option ? Theme.paper : Theme.charcoal)
                                         .padding(.horizontal, 12)
                                         .padding(.vertical, 8)
@@ -155,13 +155,13 @@ struct ReturnSummaryView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         if let recapLine {
                             Text(recapLine)
-                                .font(.system(size: 15, weight: .medium))
+                                .font(.scalable(15, weight: .medium))
                                 .foregroundStyle(Theme.charcoal)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
 
                         Text(encouragementNote)
-                            .font(.system(size: 13))
+                            .font(.scalable(13))
                             .italic()
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
@@ -176,7 +176,7 @@ struct ReturnSummaryView: View {
                             onDone()
                         } label: {
                             Text("That's it")
-                                .font(.system(size: 16, weight: .medium))
+                                .font(.scalable(16, weight: .medium))
                                 .foregroundStyle(Theme.paper)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 16)
@@ -185,7 +185,7 @@ struct ReturnSummaryView: View {
                         }
 
                         Text("Nothing to finish, nothing to log.")
-                            .font(.system(size: 12))
+                            .font(.scalable(12))
                             .foregroundStyle(Theme.softInk)
                     }
                     .padding(.top, 12)

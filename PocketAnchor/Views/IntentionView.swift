@@ -45,7 +45,7 @@ struct IntentionView: View {
                         .frame(width: 26, height: 26)
                         .accessibilityHidden(true)
                     Text("POCKET ANCHOR")
-                        .font(.system(size: 13, weight: .medium))
+                        .font(.scalable(13, weight: .medium))
                         .tracking(2)
                         .foregroundStyle(Theme.charcoal)
                 }
@@ -53,7 +53,7 @@ struct IntentionView: View {
                 .accessibilityElement(children: .combine)
 
                 Text("You don't have to go far.")
-                    .font(.system(size: 26, weight: .medium, design: .serif))
+                    .font(.scalable(26, weight: .medium, design: .serif))
                     .foregroundStyle(Theme.charcoal)
 
                 VStack(alignment: .leading, spacing: 10) {
@@ -68,7 +68,7 @@ struct IntentionView: View {
 
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Choose something to notice. Then look for it. Selective attention does the rest.")
-                        .font(.system(size: 13))
+                        .font(.scalable(13))
                         .foregroundStyle(Theme.softInk)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
@@ -81,7 +81,7 @@ struct IntentionView: View {
                                 }
                             } label: {
                                 Text(category.label)
-                                    .font(.system(size: 12))
+                                    .font(.scalable(12))
                                     .foregroundStyle(selectedCategory == category ? Theme.paper : Theme.charcoal)
                                     .padding(.horizontal, 12)
                                     .padding(.vertical, 7)
@@ -94,7 +94,7 @@ struct IntentionView: View {
                     }
 
                     Text(chosenNotice)
-                        .font(.system(size: 14))
+                        .font(.scalable(14))
                         .italic()
                         .foregroundStyle(Theme.softInk)
                         .lineLimit(nil)
@@ -104,10 +104,10 @@ struct IntentionView: View {
 
                 VStack(alignment: .leading, spacing: 5) {
                     Text("What happens next")
-                        .font(.system(size: 11, weight: .medium))
+                        .font(.scalable(11, weight: .medium))
                         .foregroundStyle(Theme.softInk)
                     Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. When you're back, just tap \"I'm back\" to return.")
-                        .font(.system(size: 12))
+                        .font(.scalable(12))
                         .foregroundStyle(Theme.charcoal)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
@@ -122,7 +122,7 @@ struct IntentionView: View {
                         onActivate(selected)
                     } label: {
                         Text("Activate Pocket Anchor")
-                            .font(.system(size: 16, weight: .medium))
+                            .font(.scalable(16, weight: .medium))
                             .foregroundStyle(Theme.paper)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
@@ -131,18 +131,18 @@ struct IntentionView: View {
                     }
 
                     Text("We'll keep time. You enjoy the air.")
-                        .font(.system(size: 12))
+                        .font(.scalable(12))
                         .foregroundStyle(Theme.softInk)
 
                     Text("Nothing leaves your phone.")
-                        .font(.system(size: 11))
+                        .font(.scalable(11))
                         .foregroundStyle(Theme.softInk.opacity(0.7))
 
                     Button {
                         showingAbout = true
                     } label: {
                         Text("About")
-                            .font(.system(size: 11))
+                            .font(.scalable(11))
                             .foregroundStyle(Theme.softInk.opacity(0.7))
                             .underline()
                             .frame(minWidth: 44, minHeight: 44)
@@ -173,7 +173,7 @@ private struct AboutView: View {
                         dismiss()
                     } label: {
                         Text("Done")
-                            .font(.system(size: 14, weight: .medium))
+                            .font(.scalable(14, weight: .medium))
                             .foregroundStyle(Theme.forest)
                     }
                 }
@@ -185,28 +185,28 @@ private struct AboutView: View {
                         .frame(width: 30, height: 30)
                         .accessibilityHidden(true)
                     Text("Pocket Anchor")
-                        .font(.system(size: 20, weight: .medium, design: .serif))
+                        .font(.scalable(20, weight: .medium, design: .serif))
                         .foregroundStyle(Theme.charcoal)
                 }
                 .accessibilityElement(children: .combine)
 
                 Text("Every doorway leads somewhere.")
-                    .font(.system(size: 13))
+                    .font(.scalable(13))
                     .italic()
                     .foregroundStyle(Theme.softInk)
 
                 Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of EchoSink and Downstep.")
-                    .font(.system(size: 14))
+                    .font(.scalable(14))
                     .foregroundStyle(Theme.softInk)
                     .fixedSize(horizontal: false, vertical: true)
 
                 Text("No accounts. No ads. No streaks. Your data never leaves this device.")
-                    .font(.system(size: 12))
+                    .font(.scalable(12))
                     .foregroundStyle(Theme.softInk.opacity(0.8))
                     .fixedSize(horizontal: false, vertical: true)
 
                 Text("The Nature, Texture, Life, and Sound prompts aren't a game or a checklist — they're just there to help you notice more. Nothing is scored, tracked, or checked afterward.")
-                    .font(.system(size: 12))
+                    .font(.scalable(12))
                     .foregroundStyle(Theme.softInk.opacity(0.8))
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -228,13 +228,13 @@ private struct DurationRow: View {
             HStack {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(duration.label)
-                        .font(.system(size: 15, weight: .medium))
+                        .font(.scalable(15, weight: .medium))
                     Text(duration.subtitle)
-                        .font(.system(size: 12))
+                        .font(.scalable(12))
                         .foregroundStyle(Theme.softInk)
                     if let reassurance = duration.reassurance {
                         Text(reassurance)
-                            .font(.system(size: 11))
+                            .font(.scalable(11))
                             .italic()
                             .foregroundStyle(Theme.softInk.opacity(0.8))
                             .padding(.top, 2)

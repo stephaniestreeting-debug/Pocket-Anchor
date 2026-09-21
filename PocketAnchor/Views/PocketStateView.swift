@@ -14,13 +14,13 @@ struct PocketStateView: View {
 
             VStack {
                 Text(duration.label)
-                    .font(.system(size: 12))
+                    .font(.scalable(12))
                     .foregroundStyle(Theme.moss.opacity(0.5))
                     .padding(.top, 40)
 
                 if showReassurance {
                     Text("Nothing's wrong. The screen just stays dark and quiet from here.")
-                        .font(.system(size: 13))
+                        .font(.scalable(13))
                         .foregroundStyle(Theme.moss.opacity(0.6))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 48)
@@ -36,7 +36,7 @@ struct PocketStateView: View {
                     onReturn(.now)
                 } label: {
                     Text("I'm back")
-                        .font(.system(size: 14))
+                        .font(.scalable(14))
                         .foregroundStyle(Theme.moss)
                         .padding(.vertical, 14)
                         .padding(.horizontal, 28)
