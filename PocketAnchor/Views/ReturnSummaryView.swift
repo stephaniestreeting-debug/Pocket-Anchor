@@ -20,10 +20,14 @@ struct ReturnSummaryView: View {
 
     private var welcomeLine: String {
         let minuteWord = "minute\(minutes == 1 ? "" : "s")"
-        if record.duration == .doorway {
+        switch record.duration {
+        case .doorway:
             return "You spent \(minutes) \(minuteWord) at the door. That's the whole thing today. Your phone stayed in your pocket where it belonged."
+        case .nearby:
+            return "You spent \(minutes) \(minuteWord) close to home. Your phone stayed in your pocket where it belonged."
+        case .block, .wander, .open:
+            return "You spent \(minutes) \(minuteWord) outside. Your phone stayed in your pocket where it belonged."
         }
-        return "You spent \(minutes) \(minuteWord) outside. Your phone stayed in your pocket where it belonged."
     }
 
     private var recapLine: String? {
@@ -130,20 +134,24 @@ struct ReturnSummaryView: View {
                         }
                     }
 
-                    VStack(alignment: .leading, spacing: 6) {
+                    VStack(alignment: .leading, spacing: 8) {
                         if let recapLine {
                             Text(recapLine)
-                                .font(.system(size: 13))
-                                .foregroundStyle(Theme.softInk)
+                                .font(.system(size: 15, weight: .medium))
+                                .foregroundStyle(Theme.charcoal)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
 
                         Text(encouragementNote)
-                            .font(.system(size: 12))
+                            .font(.system(size: 13))
                             .italic()
-                            .foregroundStyle(Theme.softInk.opacity(0.8))
+                            .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
                     }
+                    .padding(16)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Theme.moss.opacity(0.15))
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
 
                     VStack(spacing: 8) {
                         Button {

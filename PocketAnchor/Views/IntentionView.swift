@@ -12,31 +12,30 @@ struct IntentionView: View {
             Theme.paper.ignoresSafeArea()
 
             ScrollView {
-                VStack(alignment: .leading, spacing: 22) {
+                VStack(alignment: .leading, spacing: 18) {
                 HStack(spacing: 10) {
                     BrandMark()
-                        .frame(width: 28, height: 28)
+                        .frame(width: 26, height: 26)
                     Text("POCKET ANCHOR")
                         .font(.system(size: 13, weight: .medium))
                         .tracking(2)
                         .foregroundStyle(Theme.charcoal)
                 }
-                .padding(.top, 12)
+                .padding(.top, 8)
 
-                VStack(alignment: .leading, spacing: 10) {
+                VStack(alignment: .leading, spacing: 8) {
                     Text("You don't have to go far.")
-                        .font(.system(size: 28, weight: .medium, design: .serif))
+                        .font(.system(size: 26, weight: .medium, design: .serif))
                         .foregroundStyle(Theme.charcoal)
 
                     Text(atmosphericLine)
-                        .font(.system(size: 15))
+                        .font(.system(size: 14))
                         .foregroundStyle(Theme.softInk)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding(.top, 12)
 
-                VStack(alignment: .leading, spacing: 12) {
+                VStack(alignment: .leading, spacing: 10) {
                     ForEach(OutingDuration.allCases) { duration in
                         DurationRow(duration: duration, isSelected: duration == selected) {
                             selected = duration
@@ -44,22 +43,22 @@ struct IntentionView: View {
                     }
                 }
 
-                VStack(alignment: .leading, spacing: 6) {
+                VStack(alignment: .leading, spacing: 5) {
                     Text("What happens next")
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(Theme.softInk)
                     Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. When you're back, just tap \"I'm back\" to return.")
-                        .font(.system(size: 13))
+                        .font(.system(size: 12))
                         .foregroundStyle(Theme.charcoal)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                .padding(14)
+                .padding(12)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .background(Theme.moss.opacity(0.15))
                 .clipShape(RoundedRectangle(cornerRadius: 14))
 
-                VStack(spacing: 8) {
+                VStack(spacing: 6) {
                     Button {
                         onActivate(selected)
                     } label: {
@@ -167,8 +166,8 @@ private struct DurationRow: View {
                     Text(duration.subtitle)
                         .font(.system(size: 12))
                         .foregroundStyle(Theme.softInk)
-                    if duration == .doorway {
-                        Text("Some days, the doorway is the whole thing.")
+                    if let reassurance = duration.reassurance {
+                        Text(reassurance)
                             .font(.system(size: 11))
                             .italic()
                             .foregroundStyle(Theme.softInk.opacity(0.8))
