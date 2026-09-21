@@ -76,7 +76,7 @@ struct IntentionView: View {
                             } label: {
                                 Text(category.label)
                                     .font(.scalable(12))
-                                    .foregroundStyle(selectedCategory == category ? Theme.paper : Theme.charcoal)
+                                    .foregroundStyle(selectedCategory == category ? Theme.cream : Theme.charcoal)
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 7)
                                     .background(selectedCategory == category ? Theme.forest : Theme.moss.opacity(0.15))
@@ -119,7 +119,7 @@ struct IntentionView: View {
                     } label: {
                         Text("Activate Pocket Anchor")
                             .font(.scalable(16, weight: .medium))
-                            .foregroundStyle(Theme.paper)
+                            .foregroundStyle(Theme.cream)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
                             .background(Theme.forest)

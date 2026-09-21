@@ -54,7 +54,7 @@ struct ReturnSummaryView: View {
                         } label: {
                             Text("That's it")
                                 .font(.scalable(16, weight: .medium))
-                                .foregroundStyle(Theme.paper)
+                                .foregroundStyle(Theme.cream)
                                 .frame(maxWidth: .infinity)
                                 .padding(.vertical, 16)
                                 .background(Theme.forest)
