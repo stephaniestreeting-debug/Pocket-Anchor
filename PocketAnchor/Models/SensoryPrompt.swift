@@ -1,21 +1,57 @@
 import Foundation
 
-enum SensoryPromptBank {
-    static let seeds: [String] = [
-        "Maybe there's a texture worth touching today — bark, stone, a cold railing.",
-        "There's a particular smell in the air right before rain.",
-        "A leaf, a door, a parked car — some color out there might be brighter than you expect.",
-        "Clouds can look like a dog, a boat, a face, if you watch for a moment.",
-        "Birds, traffic hum, wind in the leaves — some sounds only exist outdoors.",
-        "The air might be cooler or warmer than you expect against your skin.",
-        "A bird, a leaf, a squirrel — something small might be moving nearby, worth noticing.",
-        "A small plant might be growing somewhere unexpected, like a crack in the pavement.",
-        "Late-day light can do lovely things to walls, windows, and puddles.",
-        "A dog is probably out there right now, wagging at something."
-    ]
+enum NoticeCategory: String, CaseIterable, Identifiable {
+    case nature
+    case texture
+    case life
+    case sound
 
-    static func randomSeed() -> String {
-        seeds.randomElement() ?? seeds[0]
+    var id: Self { self }
+
+    var label: String {
+        switch self {
+        case .nature: "Nature"
+        case .texture: "Texture"
+        case .life: "Life"
+        case .sound: "Sound"
+        }
+    }
+
+    var items: [String] {
+        switch self {
+        case .nature:
+            [
+                "The sun on your skin, if it's out.",
+                "Light filtering through leaves.",
+                "The way the air moves against you.",
+                "Shadows shifting as clouds pass."
+            ]
+        case .texture:
+            [
+                "The bark of a tree.",
+                "The path under your feet.",
+                "A cold railing or fence.",
+                "Stone, brick, or a garden wall."
+            ]
+        case .life:
+            [
+                "A dog out on its own walk.",
+                "Birds crossing overhead.",
+                "A butterfly or bee near a flower.",
+                "Someone else out enjoying the same air."
+            ]
+        case .sound:
+            [
+                "Wind moving through leaves.",
+                "Birdsong somewhere close or far.",
+                "The hum of distant traffic.",
+                "A stretch of real quiet."
+            ]
+        }
+    }
+
+    func randomItem() -> String {
+        items.randomElement() ?? items[0]
     }
 }
 

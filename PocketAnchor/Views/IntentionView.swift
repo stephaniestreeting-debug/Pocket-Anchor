@@ -4,8 +4,16 @@ struct IntentionView: View {
     let onActivate: (OutingDuration) -> Void
 
     @State private var selected: OutingDuration = .block
-    @State private var atmosphericLine: String = SensoryPromptBank.randomSeed()
+    @State private var selectedCategory: NoticeCategory
+    @State private var chosenNotice: String
     @State private var showingAbout = false
+
+    init(onActivate: @escaping (OutingDuration) -> Void) {
+        self.onActivate = onActivate
+        let category = NoticeCategory.allCases.randomElement() ?? .nature
+        _selectedCategory = State(initialValue: category)
+        _chosenNotice = State(initialValue: category.randomItem())
+    }
 
     var body: some View {
         ZStack {
@@ -30,11 +38,38 @@ struct IntentionView: View {
                         .font(.system(size: 26, weight: .medium, design: .serif))
                         .foregroundStyle(Theme.charcoal)
 
-                    Text(atmosphericLine)
+                    Text("Maybe something to notice today")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundStyle(Theme.softInk)
+
+                    HStack(spacing: 8) {
+                        ForEach(NoticeCategory.allCases) { category in
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.2)) {
+                                    selectedCategory = category
+                                    chosenNotice = category.randomItem()
+                                }
+                            } label: {
+                                Text(category.label)
+                                    .font(.system(size: 12))
+                                    .foregroundStyle(selectedCategory == category ? Theme.paper : Theme.charcoal)
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 7)
+                                    .background(selectedCategory == category ? Theme.forest : Theme.moss.opacity(0.15))
+                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityAddTraits(selectedCategory == category ? [.isButton, .isSelected] : .isButton)
+                        }
+                    }
+
+                    Text(chosenNotice)
                         .font(.system(size: 14))
+                        .italic()
                         .foregroundStyle(Theme.softInk)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                        .padding(.top, 2)
                 }
 
                 VStack(alignment: .leading, spacing: 10) {
