@@ -130,7 +130,7 @@ private struct AboutView: View {
                         .foregroundStyle(Theme.charcoal)
                 }
 
-                Text("Small steps, wide ripples.")
+                Text("Every doorway leads somewhere.")
                     .font(.system(size: 13))
                     .italic()
                     .foregroundStyle(Theme.softInk)
