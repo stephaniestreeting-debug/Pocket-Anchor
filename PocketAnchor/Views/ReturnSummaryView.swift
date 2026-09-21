@@ -7,8 +7,6 @@ struct ReturnSummaryView: View {
 
     @Environment(\.modelContext) private var modelContext
 
-    @State private var encouragementNote: String = EncouragementBank.randomNote()
-
     private var minutes: Int {
         max(1, Int((record.actualDuration / 60).rounded()))
     }
@@ -41,7 +39,7 @@ struct ReturnSummaryView: View {
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        Text("We hope something out there caught your eye.")
+                        Text("Whatever that looked like today, it counts.")
                             .font(.scalable(15))
                             .italic()
                             .foregroundStyle(Theme.softInk)
@@ -49,16 +47,6 @@ struct ReturnSummaryView: View {
                             .padding(.top, 4)
                     }
                     .padding(.top, 20)
-
-                    Text(encouragementNote)
-                        .font(.scalable(13))
-                        .italic()
-                        .foregroundStyle(Theme.softInk)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(16)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(Theme.moss.opacity(0.15))
-                        .clipShape(RoundedRectangle(cornerRadius: 16))
 
                     VStack(spacing: 6) {
                         Button {

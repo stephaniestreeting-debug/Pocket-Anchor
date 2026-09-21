@@ -54,17 +54,3 @@ enum NoticeCategory: String, CaseIterable, Identifiable {
         items.randomElement() ?? items[0]
     }
 }
-
-enum EncouragementBank {
-    static let notes: [String] = [
-        "Fresh air and a bit of noticing does more for a tired brain than people expect.",
-        "Turns out paying attention to small things like this is genuinely restful for your mind.",
-        "A few minutes of this is apparently enough to help a busy mind settle a little.",
-        "Noticing things outside is one of the simpler ways to give your brain a break.",
-        "Small moments like this add up more than they seem to."
-    ]
-
-    static func randomNote() -> String {
-        notes.randomElement() ?? notes[0]
-    }
-}
