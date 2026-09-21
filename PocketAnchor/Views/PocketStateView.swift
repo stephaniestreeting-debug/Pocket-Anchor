@@ -6,6 +6,8 @@ struct PocketStateView: View {
     let startedAt: Date
     let onReturn: (Date) -> Void
 
+    @State private var showReassurance = true
+
     var body: some View {
         ZStack {
             Theme.pocketBlack.ignoresSafeArea()
@@ -15,6 +17,16 @@ struct PocketStateView: View {
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.moss.opacity(0.5))
                     .padding(.top, 40)
+
+                if showReassurance {
+                    Text("Nothing's wrong. The screen just stays dark and quiet from here.")
+                        .font(.system(size: 13))
+                        .foregroundStyle(Theme.moss.opacity(0.6))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 48)
+                        .padding(.top, 24)
+                        .transition(.opacity)
+                }
 
                 Spacer()
 
@@ -41,6 +53,12 @@ struct PocketStateView: View {
             let generator = UIImpactFeedbackGenerator(style: .soft)
             generator.impactOccurred()
             DepartureCue.play()
+        }
+        .task {
+            try? await Task.sleep(for: .seconds(4))
+            withAnimation(.easeOut(duration: 1.0)) {
+                showReassurance = false
+            }
         }
     }
 }

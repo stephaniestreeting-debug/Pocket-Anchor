@@ -5,13 +5,23 @@ struct IntentionView: View {
 
     @State private var selected: OutingDuration = .block
     @State private var atmosphericLine: String = SensoryPromptBank.randomSeed().seed
+    @State private var showingAbout = false
 
     var body: some View {
         ZStack {
             Theme.paper.ignoresSafeArea()
 
-            VStack(alignment: .leading, spacing: 28) {
-                Spacer()
+            ScrollView {
+                VStack(alignment: .leading, spacing: 22) {
+                HStack(spacing: 10) {
+                    BrandMark()
+                        .frame(width: 28, height: 28)
+                    Text("POCKET ANCHOR")
+                        .font(.system(size: 13, weight: .medium))
+                        .tracking(2)
+                        .foregroundStyle(Theme.charcoal)
+                }
+                .padding(.top, 12)
 
                 VStack(alignment: .leading, spacing: 10) {
                     Text("You don't have to go far.")
@@ -21,7 +31,10 @@ struct IntentionView: View {
                     Text(atmosphericLine)
                         .font(.system(size: 15))
                         .foregroundStyle(Theme.softInk)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
+                .padding(.top, 12)
 
                 VStack(alignment: .leading, spacing: 12) {
                     ForEach(OutingDuration.allCases) { duration in
@@ -31,7 +44,20 @@ struct IntentionView: View {
                     }
                 }
 
-                Spacer()
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("What happens next")
+                        .font(.system(size: 11, weight: .medium))
+                        .foregroundStyle(Theme.softInk)
+                    Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. When you're back, just tap \"I'm back\" to return.")
+                        .font(.system(size: 13))
+                        .foregroundStyle(Theme.charcoal)
+                        .lineLimit(nil)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(14)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(Theme.moss.opacity(0.15))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
 
                 VStack(spacing: 8) {
                     Button {
@@ -53,7 +79,69 @@ struct IntentionView: View {
                     Text("Nothing leaves your phone.")
                         .font(.system(size: 11))
                         .foregroundStyle(Theme.softInk.opacity(0.7))
+
+                    Button {
+                        showingAbout = true
+                    } label: {
+                        Text("About")
+                            .font(.system(size: 11))
+                            .foregroundStyle(Theme.softInk.opacity(0.7))
+                            .underline()
+                            .frame(minWidth: 44, minHeight: 44)
+                    }
+                    .contentShape(Rectangle())
                 }
+                }
+                .padding(24)
+            }
+        }
+        .sheet(isPresented: $showingAbout) {
+            AboutView()
+        }
+    }
+}
+
+private struct AboutView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        ZStack {
+            Theme.paper.ignoresSafeArea()
+
+            VStack(alignment: .leading, spacing: 20) {
+                HStack {
+                    Spacer()
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Done")
+                            .font(.system(size: 14, weight: .medium))
+                            .foregroundStyle(Theme.forest)
+                    }
+                }
+
+                Spacer()
+
+                HStack(spacing: 10) {
+                    BrandMark()
+                        .frame(width: 30, height: 30)
+                    Text("Pocket Anchor")
+                        .font(.system(size: 20, weight: .medium, design: .serif))
+                        .foregroundStyle(Theme.charcoal)
+                }
+
+                Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of EchoSink and Downstep.")
+                    .font(.system(size: 14))
+                    .foregroundStyle(Theme.softInk)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Text("No accounts. No ads. No streaks. Your data never leaves this device.")
+                    .font(.system(size: 12))
+                    .foregroundStyle(Theme.softInk.opacity(0.8))
+                    .fixedSize(horizontal: false, vertical: true)
+
+                Spacer()
+                Spacer()
             }
             .padding(24)
         }
@@ -90,6 +178,29 @@ private struct DurationRow: View {
         }
         .foregroundStyle(Theme.charcoal)
         .buttonStyle(.plain)
+    }
+}
+
+private struct BrandMark: View {
+    var body: some View {
+        Canvas { context, size in
+            let w = size.width
+            let h = size.height
+            var path = Path()
+            path.move(to: CGPoint(x: w * 0.5, y: h * 0.32))
+            path.addLine(to: CGPoint(x: w * 0.5, y: h * 0.62))
+            path.move(to: CGPoint(x: w * 0.28, y: h * 0.47))
+            path.addLine(to: CGPoint(x: w * 0.72, y: h * 0.47))
+            path.move(to: CGPoint(x: w * 0.5, y: h * 0.62))
+            path.addQuadCurve(to: CGPoint(x: w * 0.22, y: h * 0.82), control: CGPoint(x: w * 0.5, y: h * 0.82))
+            path.move(to: CGPoint(x: w * 0.5, y: h * 0.62))
+            path.addQuadCurve(to: CGPoint(x: w * 0.78, y: h * 0.82), control: CGPoint(x: w * 0.5, y: h * 0.82))
+
+            context.stroke(path, with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.09, lineCap: .round))
+
+            let ringRect = CGRect(x: w * 0.5 - w * 0.11, y: h * 0.08, width: w * 0.22, height: w * 0.22)
+            context.stroke(Path(ellipseIn: ringRect), with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.08))
+        }
     }
 }
 

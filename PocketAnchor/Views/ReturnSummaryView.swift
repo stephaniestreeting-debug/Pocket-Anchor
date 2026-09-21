@@ -10,7 +10,6 @@ struct ReturnSummaryView: View {
     @State private var callbackPrompt: SensoryPrompt
     @State private var bonusPrompts: [SensoryPrompt]
     @State private var affirmed: Set<String> = []
-    @State private var declined: Set<String> = []
 
     init(record: OutingRecord, onDone: @escaping () -> Void) {
         self.record = record
@@ -53,14 +52,12 @@ struct ReturnSummaryView: View {
                     ForEach(allPrompts) { prompt in
                         NoticingRow(
                             prompt: prompt,
-                            state: affirmed.contains(prompt.id) ? .yes : (declined.contains(prompt.id) ? .not : .undecided)
-                        ) { didHappen in
-                            if didHappen {
-                                affirmed.insert(prompt.id)
-                                declined.remove(prompt.id)
-                            } else {
-                                declined.insert(prompt.id)
+                            isAffirmed: affirmed.contains(prompt.id)
+                        ) {
+                            if affirmed.contains(prompt.id) {
                                 affirmed.remove(prompt.id)
+                            } else {
+                                affirmed.insert(prompt.id)
                             }
                             saveNoticedPrompts()
                         }
@@ -103,36 +100,31 @@ struct ReturnSummaryView: View {
     }
 }
 
-private enum NoticeState {
-    case undecided, yes, not
-}
-
 private struct NoticingRow: View {
     let prompt: SensoryPrompt
-    let state: NoticeState
-    let onChoose: (Bool) -> Void
+    let isAffirmed: Bool
+    let onToggle: () -> Void
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
-            Text(prompt.callback)
-                .font(.system(size: 13))
-                .foregroundStyle(Theme.charcoal)
-
-            Spacer()
-
-            HStack(spacing: 10) {
+        Button(action: onToggle) {
+            HStack(alignment: .top, spacing: 12) {
                 Circle()
-                    .fill(state == .yes ? Theme.clay : Color.clear)
+                    .fill(isAffirmed ? Theme.clay : Color.clear)
                     .overlay(Circle().stroke(Theme.clay.opacity(0.5), lineWidth: 1))
                     .frame(width: 20, height: 20)
-                    .onTapGesture { onChoose(true) }
+                    .padding(.top, 1)
 
-                Text("not today")
-                    .font(.system(size: 11))
-                    .foregroundStyle(state == .not ? Theme.softInk : Theme.softInk.opacity(0.4))
-                    .onTapGesture { onChoose(false) }
+                Text(prompt.callback)
+                    .font(.system(size: 13))
+                    .foregroundStyle(Theme.charcoal)
+                    .multilineTextAlignment(.leading)
+
+                Spacer(minLength: 0)
             }
+            .contentShape(Rectangle())
+            .padding(.vertical, 4)
         }
+        .buttonStyle(.plain)
     }
 }
 
