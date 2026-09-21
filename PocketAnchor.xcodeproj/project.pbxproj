@@ -19,6 +19,7 @@
 		2453F8EFF7F0729845A7936C /* PocketStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA864DDBB2E0946B6478452 /* PocketStateView.swift */; };
 		6F39F4D39E1638A0512154E3 /* ReturnSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5BD0AF56B15162000E98960 /* ReturnSummaryView.swift */; };
 		BEC0B809AF018C750ED6B5C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4856A1712B4B421426E9828 /* Assets.xcassets */; };
+		B22F7A96D66C4CFACD81244E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3AC88D2CF76A376790AE10D2 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		ADA864DDBB2E0946B6478452 /* PocketStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PocketStateView.swift; sourceTree = "<group>"; };
 		A5BD0AF56B15162000E98960 /* ReturnSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReturnSummaryView.swift; sourceTree = "<group>"; };
 		D4856A1712B4B421426E9828 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3AC88D2CF76A376790AE10D2 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				0677BE33965A03A48C92805D /* PendingSession.swift */,
 				9E8BB503BEBCCD9593F0A2E3 /* Theme.swift */,
 				FA4E5BCEB576E52FECB6AFD7 /* AudioCue.swift */,
+				3AC88D2CF76A376790AE10D2 /* PrivacyInfo.xcprivacy */,
 				90DD0467C6A738950F609AE6 /* Models */,
 				6B326862F45211245E565F6E /* Views */,
 				D4856A1712B4B421426E9828 /* Assets.xcassets */,
@@ -158,6 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEC0B809AF018C750ED6B5C3 /* Assets.xcassets in Resources */,
+				B22F7A96D66C4CFACD81244E /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
