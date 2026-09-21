@@ -36,4 +36,16 @@ enum OutingDuration: String, CaseIterable, Identifiable, Codable {
         case .block, .wander, .open: nil
         }
     }
+
+    /// Roughly how long this outing is meant to last, used only to place
+    /// the halfway chime. `nil` for `.open`, which has no fixed length.
+    var approximateSeconds: TimeInterval? {
+        switch self {
+        case .doorway: 120
+        case .nearby: 300
+        case .block: 600
+        case .wander: 1200
+        case .open: nil
+        }
+    }
 }

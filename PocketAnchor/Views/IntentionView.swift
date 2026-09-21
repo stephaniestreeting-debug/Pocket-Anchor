@@ -106,7 +106,7 @@ struct IntentionView: View {
                     Text("What happens next")
                         .font(.scalable(11, weight: .medium))
                         .foregroundStyle(Theme.softInk)
-                    Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. When you're back, just tap \"I'm back\" to return.")
+                    Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. Halfway through, you'll hear a soft sound — no need to do anything. When you're back, just tap \"I'm back\" to return.")
                         .font(.scalable(12))
                         .foregroundStyle(Theme.charcoal)
                         .lineLimit(nil)
