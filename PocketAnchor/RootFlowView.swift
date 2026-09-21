@@ -32,7 +32,7 @@ struct RootFlowView: View {
                     let record = OutingRecord(
                         startDate: startedAt,
                         actualDuration: finishedAt.timeIntervalSince(startedAt),
-                        intendedLabel: duration.label
+                        duration: duration
                     )
                     stage = .summary(record: record)
                 }

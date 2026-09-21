@@ -18,6 +18,14 @@ struct ReturnSummaryView: View {
         max(1, Int((record.actualDuration / 60).rounded()))
     }
 
+    private var welcomeLine: String {
+        let minuteWord = "minute\(minutes == 1 ? "" : "s")"
+        if record.duration == .doorway {
+            return "You spent \(minutes) \(minuteWord) at the door. That's the whole thing today. Your phone stayed in your pocket where it belonged."
+        }
+        return "You spent \(minutes) \(minuteWord) outside. Your phone stayed in your pocket where it belonged."
+    }
+
     private var recapLine: String? {
         let countPart: String?
         switch noticedCount {
@@ -66,7 +74,7 @@ struct ReturnSummaryView: View {
                             .font(.system(size: 26, weight: .medium, design: .serif))
                             .foregroundStyle(Theme.charcoal)
 
-                        Text("You spent \(minutes) minute\(minutes == 1 ? "" : "s") outside. Your phone stayed in your pocket where it belonged.")
+                        Text(welcomeLine)
                             .font(.system(size: 15))
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
@@ -174,7 +182,7 @@ struct ReturnSummaryView: View {
 
 #Preview {
     ReturnSummaryView(
-        record: OutingRecord(startDate: .now, actualDuration: 620, intendedLabel: "10 min"),
+        record: OutingRecord(startDate: .now, actualDuration: 620, duration: .block),
         onDone: {}
     )
     .modelContainer(for: OutingRecord.self, inMemory: true)

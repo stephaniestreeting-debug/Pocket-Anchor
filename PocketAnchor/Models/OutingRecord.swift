@@ -5,20 +5,24 @@ import SwiftData
 final class OutingRecord {
     var startDate: Date
     var actualDuration: TimeInterval
-    var intendedLabel: String
+    var durationRawValue: String
     var noticedCount: Int
     var mood: String?
+
+    var duration: OutingDuration {
+        OutingDuration(rawValue: durationRawValue) ?? .block
+    }
 
     init(
         startDate: Date,
         actualDuration: TimeInterval,
-        intendedLabel: String,
+        duration: OutingDuration,
         noticedCount: Int = 0,
         mood: String? = nil
     ) {
         self.startDate = startDate
         self.actualDuration = actualDuration
-        self.intendedLabel = intendedLabel
+        self.durationRawValue = duration.rawValue
         self.noticedCount = noticedCount
         self.mood = mood
     }
