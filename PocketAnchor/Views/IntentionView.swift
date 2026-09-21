@@ -198,16 +198,17 @@ private struct BrandMark: View {
         Canvas { context, size in
             let w = size.width
             let h = size.height
-            let center = CGPoint(x: w * 0.5, y: h * 0.5)
 
-            let dotRect = CGRect(x: center.x - w * 0.14, y: center.y - w * 0.14, width: w * 0.28, height: w * 0.28)
+            var doorPath = Path()
+            doorPath.move(to: CGPoint(x: w * 0.30, y: h * 0.80))
+            doorPath.addLine(to: CGPoint(x: w * 0.30, y: h * 0.46))
+            doorPath.addQuadCurve(to: CGPoint(x: w * 0.70, y: h * 0.46), control: CGPoint(x: w * 0.5, y: h * 0.22))
+            doorPath.addLine(to: CGPoint(x: w * 0.70, y: h * 0.80))
+
+            context.stroke(doorPath, with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.09, lineCap: .round, lineJoin: .round))
+
+            let dotRect = CGRect(x: w * 0.5 - w * 0.11, y: h * 0.56 - w * 0.11, width: w * 0.22, height: w * 0.22)
             context.fill(Path(ellipseIn: dotRect), with: .color(Theme.clay))
-
-            let ring1Rect = CGRect(x: center.x - w * 0.34, y: center.y - w * 0.34, width: w * 0.68, height: w * 0.68)
-            context.stroke(Path(ellipseIn: ring1Rect), with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.07))
-
-            let ring2Rect = CGRect(x: center.x - w * 0.46, y: center.y - w * 0.46, width: w * 0.92, height: w * 0.92)
-            context.stroke(Path(ellipseIn: ring2Rect), with: .color(Theme.forest.opacity(0.5)), style: StrokeStyle(lineWidth: w * 0.055))
         }
     }
 }
