@@ -4,19 +4,13 @@ struct IntentionView: View {
     let onActivate: (OutingDuration) -> Void
 
     @State private var selected: OutingDuration = .block
-    @State private var selectedCategory: NoticeCategory
-    @State private var chosenNotice: String
-    @State private var noticeQueue: [String]
+    @State private var selectedCategory: NoticeCategory?
+    @State private var chosenNotice: String?
+    @State private var noticeQueue: [String] = []
     @State private var showingAbout = false
 
     init(onActivate: @escaping (OutingDuration) -> Void) {
         self.onActivate = onActivate
-        let category = NoticeCategory.allCases.randomElement() ?? .nature
-        var queue = category.items.shuffled()
-        let first = queue.removeFirst()
-        _selectedCategory = State(initialValue: category)
-        _chosenNotice = State(initialValue: first)
-        _noticeQueue = State(initialValue: queue)
     }
 
     /// Reveals the next notice for a category: cycles through all of that
@@ -67,7 +61,7 @@ struct IntentionView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 8) {
-                    Text("Choose something to notice. Then look for it. Selective attention does the rest.")
+                    Text("Optional: choose something to notice, then look for it. Selective attention does the rest.")
                         .font(.scalable(13))
                         .foregroundStyle(Theme.softInk)
                         .lineLimit(nil)
@@ -93,13 +87,15 @@ struct IntentionView: View {
                         }
                     }
 
-                    Text(chosenNotice)
-                        .font(.scalable(14))
-                        .italic()
-                        .foregroundStyle(Theme.softInk)
-                        .lineLimit(nil)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .padding(.top, 2)
+                    if let chosenNotice {
+                        Text(chosenNotice)
+                            .font(.scalable(14))
+                            .italic()
+                            .foregroundStyle(Theme.softInk)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 2)
+                    }
                 }
 
                 VStack(alignment: .leading, spacing: 5) {
