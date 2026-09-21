@@ -36,14 +36,14 @@ struct PocketStateView: View {
                     onReturn(.now)
                 } label: {
                     Text("I'm back")
-                        .font(.scalable(14))
+                        .font(.scalable(17, weight: .medium))
                         .foregroundStyle(Theme.moss)
-                        .padding(.vertical, 14)
-                        .padding(.horizontal, 28)
+                        .frame(minWidth: 220, minHeight: 72)
                         .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Theme.moss.opacity(0.3), lineWidth: 0.5)
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(Theme.moss.opacity(0.35), lineWidth: 0.5)
                         )
+                        .contentShape(RoundedRectangle(cornerRadius: 20))
                 }
                 .padding(.bottom, 60)
             }
