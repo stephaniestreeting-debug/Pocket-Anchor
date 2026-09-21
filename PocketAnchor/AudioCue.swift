@@ -6,24 +6,46 @@ enum DepartureCue {
 
     static func play() {
         let sampleRate = 44_100.0
-        let duration = 1.4
-        let startFrequency = 523.25
-        let endFrequency = 349.23
-        let frameCount = AVAudioFrameCount(sampleRate * duration)
+        let gap = 0.05
+        // A soft descending two-note cadence (like a settling exhale)
+        // rather than a single continuous pitch sweep.
+        let notes: [(frequency: Double, duration: Double, startTime: Double)] = [
+            (440.00, 0.55, 0.0),
+            (329.63, 0.85, 0.55 + gap)
+        ]
+        let totalDuration = notes.map { $0.startTime + $0.duration }.max() ?? 1.0
+        let frameCount = AVAudioFrameCount(sampleRate * totalDuration)
 
         guard let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1),
               let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCount),
               let channel = buffer.floatChannelData?[0] else { return }
         buffer.frameLength = frameCount
 
-        var phase = 0.0
-        for frame in 0..<Int(frameCount) {
-            let t = Double(frame) / sampleRate
-            let progress = t / duration
-            let frequency = startFrequency + (endFrequency - startFrequency) * progress
-            phase += 2.0 * Double.pi * frequency / sampleRate
-            let envelope = sin(Double.pi * progress)
-            channel[frame] = Float(sin(phase) * envelope * 0.2)
+        for note in notes {
+            let startFrame = Int(note.startTime * sampleRate)
+            let noteFrameCount = Int(note.duration * sampleRate)
+            let attackFrames = Int(0.01 * sampleRate)
+
+            for i in 0..<noteFrameCount {
+                let frame = startFrame + i
+                guard frame < Int(frameCount) else { break }
+                let t = Double(i) / sampleRate
+
+                // Quick linear attack (avoids a click at note onset), then a
+                // natural exponential decay (reads as a bell/chime rather
+                // than the abrupt symmetric fade of a plain sine window).
+                let attack = i < attackFrames ? Double(i) / Double(attackFrames) : 1.0
+                let decay = exp(-t * 3.2)
+                let envelope = attack * decay
+
+                // A quiet, slightly detuned overtone adds warmth so the
+                // tone doesn't read as a thin, purely synthetic sine wave.
+                let fundamental = sin(2.0 * Double.pi * note.frequency * t)
+                let overtone = sin(2.0 * Double.pi * note.frequency * 2.01 * t) * 0.18
+                let sample = (fundamental + overtone) * envelope * 0.22
+
+                channel[frame] += Float(sample)
+            }
         }
 
         let engine = AVAudioEngine()

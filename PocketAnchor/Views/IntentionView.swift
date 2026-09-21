@@ -83,7 +83,7 @@ struct IntentionView: View {
                                 Text(category.label)
                                     .font(.scalable(12))
                                     .foregroundStyle(selectedCategory == category ? Theme.paper : Theme.charcoal)
-                                    .padding(.horizontal, 12)
+                                    .frame(maxWidth: .infinity)
                                     .padding(.vertical, 7)
                                     .background(selectedCategory == category ? Theme.forest : Theme.moss.opacity(0.15))
                                     .clipShape(RoundedRectangle(cornerRadius: 12))
