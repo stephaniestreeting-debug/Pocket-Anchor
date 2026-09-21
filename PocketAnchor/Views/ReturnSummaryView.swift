@@ -11,7 +11,7 @@ struct ReturnSummaryView: View {
     @State private var selectedMood: String?
     @State private var encouragementNote: String = EncouragementBank.randomNote()
 
-    private let moodOptions = ["Lighter", "About the same", "Heavier"]
+    private let moodOptions = ["Light", "Steady", "Heavy"]
     private let maxDots = 6
 
     private var minutes: Int {
@@ -31,15 +31,15 @@ struct ReturnSummaryView: View {
         let moodLower: String?
         let moodStandalone: String?
         switch selectedMood {
-        case "Lighter":
-            moodLower = "you're leaving lighter than you arrived"
-            moodStandalone = "You're leaving lighter than you arrived."
-        case "About the same":
-            moodLower = "you're leaving about how you arrived, steady"
-            moodStandalone = "You're leaving about how you arrived, steady."
-        case "Heavier":
-            moodLower = "today was heavier, and that's alright"
-            moodStandalone = "Today was heavier, and that's alright."
+        case "Light":
+            moodLower = "you're feeling light"
+            moodStandalone = "You're feeling light."
+        case "Steady":
+            moodLower = "you're feeling steady"
+            moodStandalone = "You're feeling steady."
+        case "Heavy":
+            moodLower = "you're feeling heavy right now, and that's alright"
+            moodStandalone = "You're feeling heavy right now, and that's alright."
         default:
             moodLower = nil
             moodStandalone = nil
@@ -99,7 +99,7 @@ struct ReturnSummaryView: View {
                     }
 
                     VStack(alignment: .leading, spacing: 10) {
-                        Text("How do you feel?")
+                        Text("How do you feel right now?")
                             .font(.system(size: 14, weight: .medium))
                             .foregroundStyle(Theme.charcoal)
 
