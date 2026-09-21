@@ -4,7 +4,7 @@ struct IntentionView: View {
     let onActivate: (OutingDuration) -> Void
 
     @State private var selected: OutingDuration = .block
-    @State private var atmosphericLine: String = SensoryPromptBank.randomSeed().seed
+    @State private var atmosphericLine: String = SensoryPromptBank.randomSeed()
     @State private var showingAbout = false
 
     var body: some View {
@@ -130,6 +130,11 @@ private struct AboutView: View {
                         .foregroundStyle(Theme.charcoal)
                 }
 
+                Text("Small steps, wide ripples.")
+                    .font(.system(size: 13))
+                    .italic()
+                    .foregroundStyle(Theme.softInk)
+
                 Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of EchoSink and Downstep.")
                     .font(.system(size: 14))
                     .foregroundStyle(Theme.softInk)
@@ -162,6 +167,13 @@ private struct DurationRow: View {
                     Text(duration.subtitle)
                         .font(.system(size: 12))
                         .foregroundStyle(Theme.softInk)
+                    if duration == .doorway {
+                        Text("Some days, the doorway is the whole thing.")
+                            .font(.system(size: 11))
+                            .italic()
+                            .foregroundStyle(Theme.softInk.opacity(0.8))
+                            .padding(.top, 2)
+                    }
                 }
                 Spacer()
                 Circle()
@@ -186,20 +198,16 @@ private struct BrandMark: View {
         Canvas { context, size in
             let w = size.width
             let h = size.height
-            var path = Path()
-            path.move(to: CGPoint(x: w * 0.5, y: h * 0.32))
-            path.addLine(to: CGPoint(x: w * 0.5, y: h * 0.62))
-            path.move(to: CGPoint(x: w * 0.28, y: h * 0.47))
-            path.addLine(to: CGPoint(x: w * 0.72, y: h * 0.47))
-            path.move(to: CGPoint(x: w * 0.5, y: h * 0.62))
-            path.addQuadCurve(to: CGPoint(x: w * 0.22, y: h * 0.82), control: CGPoint(x: w * 0.5, y: h * 0.82))
-            path.move(to: CGPoint(x: w * 0.5, y: h * 0.62))
-            path.addQuadCurve(to: CGPoint(x: w * 0.78, y: h * 0.82), control: CGPoint(x: w * 0.5, y: h * 0.82))
+            let center = CGPoint(x: w * 0.5, y: h * 0.5)
 
-            context.stroke(path, with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.09, lineCap: .round))
+            let dotRect = CGRect(x: center.x - w * 0.14, y: center.y - w * 0.14, width: w * 0.28, height: w * 0.28)
+            context.fill(Path(ellipseIn: dotRect), with: .color(Theme.clay))
 
-            let ringRect = CGRect(x: w * 0.5 - w * 0.11, y: h * 0.08, width: w * 0.22, height: w * 0.22)
-            context.stroke(Path(ellipseIn: ringRect), with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.08))
+            let ring1Rect = CGRect(x: center.x - w * 0.34, y: center.y - w * 0.34, width: w * 0.68, height: w * 0.68)
+            context.stroke(Path(ellipseIn: ring1Rect), with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.07))
+
+            let ring2Rect = CGRect(x: center.x - w * 0.46, y: center.y - w * 0.46, width: w * 0.92, height: w * 0.92)
+            context.stroke(Path(ellipseIn: ring2Rect), with: .color(Theme.forest.opacity(0.5)), style: StrokeStyle(lineWidth: w * 0.055))
         }
     }
 }
