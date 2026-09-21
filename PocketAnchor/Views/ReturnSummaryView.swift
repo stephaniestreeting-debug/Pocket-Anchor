@@ -9,6 +9,7 @@ struct ReturnSummaryView: View {
 
     @State private var noticedCount: Int = 0
     @State private var selectedMood: String?
+    @State private var encouragementNote: String = EncouragementBank.randomNote()
 
     private let moodOptions = ["Lighter", "About the same", "Heavier"]
     private let maxDots = 6
@@ -18,14 +19,40 @@ struct ReturnSummaryView: View {
     }
 
     private var recapLine: String? {
-        var parts: [String] = []
-        if noticedCount > 0 {
-            parts.append("You noticed \(noticedCount) thing\(noticedCount == 1 ? "" : "s").")
+        let countPart: String?
+        switch noticedCount {
+        case 0: countPart = nil
+        case 1: countPart = "One small thing caught your eye"
+        case 2...3: countPart = "A few things caught your eye"
+        case 4...5: countPart = "Quite a few things caught your eye"
+        default: countPart = "Plenty caught your eye today"
         }
-        if let selectedMood {
-            parts.append("Feeling \(selectedMood.lowercased()).")
+
+        let moodLower: String?
+        let moodStandalone: String?
+        switch selectedMood {
+        case "Lighter":
+            moodLower = "you're leaving lighter than you arrived"
+            moodStandalone = "You're leaving lighter than you arrived."
+        case "About the same":
+            moodLower = "you're leaving about how you arrived, steady"
+            moodStandalone = "You're leaving about how you arrived, steady."
+        case "Heavier":
+            moodLower = "today was heavier, and that's alright"
+            moodStandalone = "Today was heavier, and that's alright."
+        default:
+            moodLower = nil
+            moodStandalone = nil
         }
-        return parts.isEmpty ? nil : parts.joined(separator: " ")
+
+        if let countPart, let moodLower {
+            return "\(countPart), and \(moodLower)."
+        } else if let countPart {
+            return "\(countPart)."
+        } else if let moodStandalone {
+            return moodStandalone
+        }
+        return nil
     }
 
     var body: some View {
@@ -95,10 +122,18 @@ struct ReturnSummaryView: View {
                         }
                     }
 
-                    if let recapLine {
-                        Text(recapLine)
-                            .font(.system(size: 13))
-                            .foregroundStyle(Theme.softInk)
+                    VStack(alignment: .leading, spacing: 6) {
+                        if let recapLine {
+                            Text(recapLine)
+                                .font(.system(size: 13))
+                                .foregroundStyle(Theme.softInk)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+
+                        Text(encouragementNote)
+                            .font(.system(size: 12))
+                            .italic()
+                            .foregroundStyle(Theme.softInk.opacity(0.8))
                             .fixedSize(horizontal: false, vertical: true)
                     }
 
