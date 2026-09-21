@@ -9,6 +9,8 @@ struct IntentionView: View {
     @State private var noticeQueue: [String] = []
     @State private var showingAbout = false
 
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
     init(onActivate: @escaping (OutingDuration) -> Void) {
         self.onActivate = onActivate
     }
@@ -26,6 +28,24 @@ struct IntentionView: View {
             noticeQueue = category.items.shuffled()
         }
         chosenNotice = noticeQueue.removeFirst()
+    }
+
+    private func categoryPill(_ category: NoticeCategory) -> some View {
+        Button {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                revealNotice(for: category)
+            }
+        } label: {
+            Text(category.label)
+                .font(.scalable(12))
+                .foregroundStyle(selectedCategory == category ? Theme.cream : Theme.charcoal)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 7)
+                .background(selectedCategory == category ? Theme.forest : Theme.moss.opacity(0.15))
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selectedCategory == category ? [.isButton, .isSelected] : .isButton)
     }
 
     var body: some View {
@@ -67,23 +87,22 @@ struct IntentionView: View {
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
 
-                    HStack(spacing: 8) {
-                        ForEach(NoticeCategory.allCases) { category in
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.2)) {
-                                    revealNotice(for: category)
-                                }
-                            } label: {
-                                Text(category.label)
-                                    .font(.scalable(12))
-                                    .foregroundStyle(selectedCategory == category ? Theme.cream : Theme.charcoal)
-                                    .frame(maxWidth: .infinity)
-                                    .padding(.vertical, 7)
-                                    .background(selectedCategory == category ? Theme.forest : Theme.moss.opacity(0.15))
-                                    .clipShape(RoundedRectangle(cornerRadius: 12))
+                    if dynamicTypeSize.isAccessibilitySize {
+                        // At large accessibility text sizes, four across a
+                        // row leaves too little width per pill and words
+                        // like "Texture" break mid-word. A single column
+                        // gives each label the full row to wrap on word
+                        // boundaries instead.
+                        VStack(spacing: 8) {
+                            ForEach(NoticeCategory.allCases) { category in
+                                categoryPill(category)
                             }
-                            .buttonStyle(.plain)
-                            .accessibilityAddTraits(selectedCategory == category ? [.isButton, .isSelected] : .isButton)
+                        }
+                    } else {
+                        HStack(spacing: 8) {
+                            ForEach(NoticeCategory.allCases) { category in
+                                categoryPill(category)
+                            }
                         }
                     }
 
