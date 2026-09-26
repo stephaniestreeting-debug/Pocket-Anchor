@@ -63,5 +63,4 @@ struct RootFlowView: View {
 
 #Preview {
     RootFlowView()
-        .modelContainer(for: OutingRecord.self, inMemory: true)
 }

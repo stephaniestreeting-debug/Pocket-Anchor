@@ -1,17 +1,17 @@
 import SwiftUI
-import SwiftData
 
 struct ReturnSummaryView: View {
     let record: OutingRecord
     let onDone: () -> Void
-
-    @Environment(\.modelContext) private var modelContext
 
     private var minutes: Int {
         max(1, Int((record.actualDuration / 60).rounded()))
     }
 
     private var welcomeLine: String {
+        if minutes > 180 {
+            return "Looks like some time got away from you out there. However long it was, welcome back — your phone stayed in your pocket where it belonged."
+        }
         let minuteWord = "minute\(minutes == 1 ? "" : "s")"
         switch record.duration {
         case .doorway:
@@ -70,10 +70,6 @@ struct ReturnSummaryView: View {
                 .padding(24)
             }
         }
-        .onAppear {
-            modelContext.insert(record)
-            try? modelContext.save()
-        }
     }
 }
 
@@ -82,5 +78,4 @@ struct ReturnSummaryView: View {
         record: OutingRecord(startDate: .now, actualDuration: 620, duration: .block),
         onDone: {}
     )
-    .modelContainer(for: OutingRecord.self, inMemory: true)
 }

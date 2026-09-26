@@ -1,5 +1,4 @@
 import SwiftUI
-import SwiftData
 import UserNotifications
 
 /// Lets the halfway chime's banner and sound present even if the app
@@ -27,6 +26,5 @@ struct PocketAnchorApp: App {
         WindowGroup {
             RootFlowView()
         }
-        .modelContainer(for: OutingRecord.self)
     }
 }

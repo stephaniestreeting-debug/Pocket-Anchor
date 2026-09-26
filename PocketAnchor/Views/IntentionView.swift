@@ -1,4 +1,5 @@
 import SwiftUI
+import UserNotifications
 
 struct IntentionView: View {
     let onActivate: (OutingDuration) -> Void
@@ -8,6 +9,7 @@ struct IntentionView: View {
     @State private var chosenNotice: String?
     @State private var noticeQueue: [String] = []
     @State private var showingAbout = false
+    @State private var notificationsDenied = false
 
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
@@ -121,11 +123,20 @@ struct IntentionView: View {
                     Text("What happens next")
                         .font(.scalable(11, weight: .medium))
                         .foregroundStyle(Theme.softInk)
-                    Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. Halfway through, you'll hear a soft sound — no need to do anything. When you're back, just tap \"I'm back\" to return.")
+                    Text("Your screen will turn dark and quiet — that's meant to happen, nothing's wrong. If notifications are on, you'll hear a soft sound at the halfway point — no need to do anything. When you're back, just tap \"I'm back\" to return.")
                         .font(.scalable(12))
                         .foregroundStyle(Theme.charcoal)
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
+                    if notificationsDenied {
+                        Text("Notifications are currently off, so you won't hear that sound — you can still head back whenever feels right.")
+                            .font(.scalable(11))
+                            .italic()
+                            .foregroundStyle(Theme.softInk)
+                            .lineLimit(nil)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 2)
+                    }
                 }
                 .padding(12)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -171,6 +182,15 @@ struct IntentionView: View {
         .sheet(isPresented: $showingAbout) {
             AboutView()
         }
+        .onAppear(perform: refreshNotificationStatus)
+    }
+
+    private func refreshNotificationStatus() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                notificationsDenied = settings.authorizationStatus == .denied
+            }
+        }
     }
 }
 
@@ -213,7 +233,7 @@ private struct AboutView: View {
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of EchoSink and Downstep.")
+                        Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of The Echo Sink and Downstep.")
                             .font(.scalable(14))
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
