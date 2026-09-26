@@ -233,7 +233,7 @@ private struct AboutView: View {
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
 
-                        Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of The Echo Sink and Downstep.")
+                        Text("Part of the Life Forecast family of calm, private, local-only tools — from the maker of Echo Sink and Downstep.")
                             .font(.scalable(14))
                             .foregroundStyle(Theme.softInk)
                             .fixedSize(horizontal: false, vertical: true)
