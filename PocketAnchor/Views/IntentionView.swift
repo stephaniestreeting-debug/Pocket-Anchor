@@ -300,20 +300,11 @@ private struct DurationRow: View {
 
 private struct BrandMark: View {
     var body: some View {
-        Canvas { context, size in
-            let w = size.width
-            let h = size.height
-
-            var doorPath = Path()
-            doorPath.move(to: CGPoint(x: w * 0.30, y: h * 0.80))
-            doorPath.addLine(to: CGPoint(x: w * 0.30, y: h * 0.46))
-            doorPath.addQuadCurve(to: CGPoint(x: w * 0.70, y: h * 0.46), control: CGPoint(x: w * 0.5, y: h * 0.22))
-            doorPath.addLine(to: CGPoint(x: w * 0.70, y: h * 0.80))
-
-            context.stroke(doorPath, with: .color(Theme.forest), style: StrokeStyle(lineWidth: w * 0.09, lineCap: .round, lineJoin: .round))
-
-            let dotRect = CGRect(x: w * 0.5 - w * 0.11, y: h * 0.56 - w * 0.11, width: w * 0.22, height: w * 0.22)
-            context.fill(Path(ellipseIn: dotRect), with: .color(Theme.clay))
+        GeometryReader { proxy in
+            Image("BrandMark")
+                .resizable()
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: proxy.size.width * 0.22, style: .continuous))
         }
     }
 }
